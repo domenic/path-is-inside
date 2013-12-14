@@ -4,7 +4,7 @@ var assert = require("assert");
 var path = require("path");
 var pathIsInside = require("..");
 
-// The test data is in the form [potentialChild, potentialParent, expectedResult].
+// The test data is in the form [thePath, potentialParent, expectedResult].
 
 // For *nix-derived operating systems, we will test all these, plus all permutations with `/` appended, which should
 // give the same result.
