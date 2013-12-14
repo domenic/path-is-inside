@@ -1,6 +1,7 @@
 "use strict";
 
 var assert = require("assert");
+var path = require("path");
 var pathIsInside = require("..");
 
 // The test data is in the form [potentialChild, potentialParent, expectedResult].
@@ -12,7 +13,10 @@ var nixTests = [
     ["/x/y/z", "/x/y", true],
     ["/x/y/z", "/x/y/z", true],
     ["/x/y/z", "/x/y/z/w", false],
-    ["/x/y/z", "/x/y/w", false]
+    ["/x/y/z", "/x/y/w", false],
+
+    ["/X/y/z", "/x/y", false],
+    ["/x/Y/z", "/x/y/z", false]
 ];
 
 // For Windows, we will test all these, plus all permutations with `\` appended, plus all permutations with the drive
@@ -29,15 +33,41 @@ var windowsTests = [
 ];
 
 describe("*-nix style paths", function () {
-    nixTests.forEach(function (data) {
-        runCase(data);
-        runCase([data[0], data[1] + "/", data[2]]);
-        runCase([data[0] + "/", data[1], data[2]]);
-        runCase([data[0] + "/", data[1] + "/", data[2]]);
+    describe("process.platform = \"darwin\"", function () {
+        before(function () {
+            Object.defineProperty(process, "platform", { value: "darwin" });
+            Object.defineProperty(path, "sep", { value: "/" });
+        });
+
+        nixTests.forEach(function (data) {
+            runCase(data);
+            runCase([data[0], data[1] + "/", data[2]]);
+            runCase([data[0] + "/", data[1], data[2]]);
+            runCase([data[0] + "/", data[1] + "/", data[2]]);
+        });
+    });
+
+    describe("process.platform = \"linux\"", function () {
+        before(function () {
+            Object.defineProperty(process, "platform", { value: "linux" });
+            Object.defineProperty(path, "sep", { value: "/" });
+        });
+
+        nixTests.forEach(function (data) {
+            runCase(data);
+            runCase([data[0], data[1] + "/", data[2]]);
+            runCase([data[0] + "/", data[1], data[2]]);
+            runCase([data[0] + "/", data[1] + "/", data[2]]);
+        });
     });
 });
 
 describe("Windows-style paths", function () {
+    before(function () {
+        Object.defineProperty(process, "platform", { value: "win32" });
+        Object.defineProperty(path, "sep", { value: "\\" });
+    });
+
     describe("Uppercase drive letters", function () {
         windowsTests.forEach(runCases);
     });
