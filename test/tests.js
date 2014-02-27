@@ -15,6 +15,9 @@ var nixTests = [
     ["/x/y/z", "/x/y/z/w", false],
     ["/x/y/z", "/x/y/w", false],
 
+    ["/x/y", "/x/yy", false],
+    ["/x/yy", "/x/y", false],
+
     ["/X/y/z", "/x/y", false],
     ["/x/Y/z", "/x/y/z", false]
 ];
@@ -27,6 +30,9 @@ var windowsTests = [
     ["C:\\x\\y\\z", "C:\\x\\y\\z", true],
     ["C:\\x\\y\\z", "C:\\x\\y\\z\\w", false],
     ["C:\\x\\y\\z", "C:\\x\\y\\w", false],
+
+    ["C:\\x\\y", "C:\\x\\yy", false],
+    ["C:\\x\\yy", "C:\\x\\y", false],
 
     ["C:\\x\\y\\z", "D:\\x\\y\\z", false],
     ["C:\\x\\y\\z", "D:\\x\\y\\z\\w", false]
