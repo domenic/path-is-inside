@@ -2,7 +2,7 @@
     "name": "path-is-inside",
     "description": "Tests whether one path is inside another path",
     "keywords": ["path", "directory", "folder", "inside", "relative"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Domenic Denicola <domenic@domenicdenicola.com> (http://domenic.me)",
     "license": "WTFPL",
     "repository": {
