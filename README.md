@@ -15,6 +15,12 @@ pathIsInside("/x/y/z", "/x/y") // true
 pathIsInside("/x/y", "/x/y/z") // false
 ```
 
+Paths are considered to be inside themselves:
+
+```js
+pathIsInside("/x/y", "/x/y"); // true
+```
+
 ## OS-Specific Behavior
 
 Like Node's built-in path module, path-is-inside treats all file paths on Windows as case-insensitive, whereas it treats all file paths on *-nix operating systems as case-sensitive. Keep this in mind especially when working on a Mac, where, despite Node's defaults, the OS usually treats paths case-insensitively.
